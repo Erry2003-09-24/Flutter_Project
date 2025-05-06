@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Per caricare file da assets
 import 'dart:convert'; // Per convertire il JSON in oggetti Dart
 
+// Aggiunto un commento per testare il commit
+
 class SecureInfoScreen extends StatefulWidget {
   @override
   _SecureInfoScreenState createState() => _SecureInfoScreenState();
