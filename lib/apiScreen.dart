@@ -14,12 +14,14 @@ class _ApiScreenState extends State<ApiScreen> {
   bool _isLoading = false;
   String _errorMessage = '';
 
-  // Funzione per chiamare l'API di NIST e ottenere il significato del termine
   Future<void> _fetchDefinition(String term) async {
-    final url = Uri.parse('https://csrc.nist.gov/glossary/term/$term');
+    final url = Uri.parse('https://api.dictionaryapi.dev/api/v2/entries/en/${term.trim()}');
+
     setState(() {
       _isLoading = true;
       _errorMessage = '';
+      _definition = '';
+      _term = term;
     });
 
     try {
@@ -27,19 +29,30 @@ class _ApiScreenState extends State<ApiScreen> {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        setState(() {
-          _definition = data['definition'] ?? 'Definizione non trovata';
-          _isLoading = false;
-        });
+
+        if (data is List && data.isNotEmpty) {
+          final firstMeaning = data[0]['meanings'][0];
+          final definition = firstMeaning['definitions'][0]['definition'];
+
+          setState(() {
+            _definition = definition ?? 'Definizione non trovata.';
+            _isLoading = false;
+          });
+        } else {
+          setState(() {
+            _definition = 'Definizione non trovata.';
+            _isLoading = false;
+          });
+        }
       } else {
         setState(() {
-          _errorMessage = 'Errore nel recupero dei dati. Riprova più tardi.';
+          _errorMessage = 'Errore HTTP: ${response.statusCode}';
           _isLoading = false;
         });
       }
     } catch (e) {
       setState(() {
-        _errorMessage = 'Errore nella connessione. Controlla la tua connessione internet.';
+        _errorMessage = 'Errore di connessione: $e';
         _isLoading = false;
       });
     }
@@ -49,48 +62,45 @@ class _ApiScreenState extends State<ApiScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('API Termini di Sicurezza'),
+        title: Center(child: Text('Glossario di Sicurezza Informatica', style: TextStyle(fontWeight: FontWeight.bold),),),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
               controller: _controller,
               decoration: InputDecoration(
-                labelText: 'Inserisci un termine di sicurezza',
+                labelText: 'Inserisci un termine in inglese',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 if (_controller.text.isNotEmpty) {
                   _fetchDefinition(_controller.text);
                 }
               },
-              child: Text('Cerca Definizione'),
+              child: Text('Cerca'),
             ),
-            SizedBox(height: 20),
-            _isLoading
-                ? CircularProgressIndicator()
-                : _errorMessage.isNotEmpty
-                    ? Text(
-                        _errorMessage,
-                        style: TextStyle(color: Colors.red),
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Termine: $_term',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 10),
-                          Text('Definizione: $_definition'),
-                        ],
-                      ),
+            SizedBox(height: 24),
+            if (_isLoading)
+              CircularProgressIndicator()
+            else if (_errorMessage.isNotEmpty)
+              Text(_errorMessage, style: TextStyle(color: Colors.red))
+            else if (_definition.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Termine: $_term',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 10),
+                  Text('Definizione: $_definition'),
+                ],
+              ),
           ],
         ),
       ),

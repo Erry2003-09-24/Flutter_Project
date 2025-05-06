@@ -105,8 +105,9 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz'),
+        title: Center(child: Text('Quiz', style: TextStyle(fontWeight: FontWeight.bold))),
         backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())

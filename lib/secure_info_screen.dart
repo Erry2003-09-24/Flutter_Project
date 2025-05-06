@@ -40,7 +40,7 @@ class _SecureInfoScreenState extends State<SecureInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Info sulla sicurezza informatica'),
+        title: Center(child: Text('Info sulla sicurezza informatica', style: TextStyle(fontWeight: FontWeight.bold),),),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
