@@ -19,7 +19,7 @@ jobs:
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.29.3'  
+        flutter-version: '3.7.0'  # usa la versione che desideri
 
     - name: Install dependencies
       run: flutter pub get
@@ -38,7 +38,7 @@ jobs:
 
     - name: Archive APK (optional)
       if: success()
-      uses: actions/upload-artifact@v3  
+      uses: actions/upload-artifact@v2  # Torniamo alla versione v2
       with:
         name: app-release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
