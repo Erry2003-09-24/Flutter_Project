@@ -1,0 +1,31 @@
+name: Flutter Build
+
+on:
+  push:
+    branches:
+      - main  # Esegui l'azione ogni volta che c'è un push nel branch principale
+  pull_request:
+    branches:
+      - main  # Esegui l'azione quando un PR viene aperto verso il branch principale
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Usa un sistema Ubuntu per il build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # Checkout del codice dal repository
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.0.0'  # Sostituisci con la versione di Flutter che usi
+
+      - name: Install dependencies
+        run: flutter pub get  # Installa le dipendenze del progetto Flutter
+
+      - name: Run tests
+        run: flutter test  # Esegui i test del progetto (se presenti)
+
+      - name: Build APK
+        run: flutter build apk --release  # Costruisci l'APK di rilascio
