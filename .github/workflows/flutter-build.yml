@@ -1,31 +1,44 @@
-name: Flutter Build
+name: Flutter CI Workflow
 
 on:
   push:
     branches:
-      - main  # Esegui l'azione ogni volta che c'è un push nel branch principale
+      - cybersecurity
   pull_request:
     branches:
-      - main  # Esegui l'azione quando un PR viene aperto verso il branch principale
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Usa un sistema Ubuntu per il build
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2  # Checkout del codice dal repository
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.29.3'  # Sostituisci con la versione di Flutter che usi
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.7.0'  # usa la versione che desideri
 
-      - name: Install dependencies
-        run: flutter pub get  # Installa le dipendenze del progetto Flutter
+    - name: Install dependencies
+      run: flutter pub get
 
-      - name: Run tests
-        run: flutter test  # Esegui i test del progetto (se presenti)
+    - name: Run Flutter Analyzer (Static Code Analysis)
+      run: flutter analyze
 
-      - name: Build APK
-        run: flutter build apk --release  # Costruisci l'APK di rilascio
+    - name: Run Flutter Tests
+      run: flutter test
+
+    - name: Run Linter
+      run: flutter pub run lint
+
+    - name: Build APK (if needed)
+      run: flutter build apk --release
+
+    - name: Archive APK (optional)
+      if: success()
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-release-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
