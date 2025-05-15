@@ -46,6 +46,10 @@ class MyHomePage extends StatelessWidget {
               height: 210,
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 193, 191, 191),
+                foregroundColor: Colors.black,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -56,6 +60,10 @@ class MyHomePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 193, 191, 191),
+                foregroundColor: Colors.black,
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -66,6 +74,10 @@ class MyHomePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 193, 191, 191),
+                foregroundColor: Colors.black,
+              ),
               onPressed: () async {
                 Location location = Location();
 
@@ -92,19 +104,20 @@ class MyHomePage extends StatelessWidget {
                 locationData = await location.getLocation();
                 showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text('La tua posizione'),
-                    content: Text(
-                      'Latitudine: ${locationData.latitude}\n'
-                      'Longitudine: ${locationData.longitude}',
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: Text('OK'),
+                  builder:
+                      (context) => AlertDialog(
+                        title: Text('La tua posizione'),
+                        content: Text(
+                          'Latitudine: ${locationData.latitude}\n'
+                          'Longitudine: ${locationData.longitude}',
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text('OK'),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
                 );
               },
               child: Text('Individua la posizione'),
