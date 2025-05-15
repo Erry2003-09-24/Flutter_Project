@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "769590801467",
+    "project_id": "crimeart-bb40e",
+    "storage_bucket": "crimeart-bb40e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:769590801467:android:bd2a4b9b539999e871d81e",
+        "android_client_info": {
+          "package_name": "com.example.cyber_secure"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZM3tq2_u7sEGGAp7OuGzD19D_eomPxDM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
