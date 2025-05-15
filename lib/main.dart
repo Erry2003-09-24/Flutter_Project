@@ -30,7 +30,7 @@ class MyHomePage extends StatelessWidget {
               Text('CrimeArt', style: TextStyle(fontWeight: FontWeight.bold)),
               Text(
                 'L\'app che consente di ricercare crimini e opere d\'arte',
-                style: TextStyle(fontSize: 12),
+                style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic),
               ),
             ],
           ),
