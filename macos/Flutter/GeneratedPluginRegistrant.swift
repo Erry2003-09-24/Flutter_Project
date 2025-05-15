@@ -5,8 +5,10 @@
 import FlutterMacOS
 import Foundation
 
-import local_auth_darwin
+import flutter_blue_plus_darwin
+import location
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  FLALocalAuthPlugin.register(with: registry.registrar(forPlugin: "FLALocalAuthPlugin"))
+  FlutterBluePlusPlugin.register(with: registry.registrar(forPlugin: "FlutterBluePlusPlugin"))
+  LocationPlugin.register(with: registry.registrar(forPlugin: "LocationPlugin"))
 }
