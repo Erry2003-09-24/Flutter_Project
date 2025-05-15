@@ -90,6 +90,22 @@ class MyHomePage extends StatelessWidget {
                 }
 
                 locationData = await location.getLocation();
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('La tua posizione'),
+                    content: Text(
+                      'Latitudine: ${locationData.latitude}\n'
+                      'Longitudine: ${locationData.longitude}',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
               },
               child: Text('Individua la posizione'),
             ),
